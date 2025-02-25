@@ -52,6 +52,20 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/freeform_background.png
+    - assets/pluto_logo1.png
+    - assets/pluto_logo2.png
+    - assets/parents.png
+    - assets/therapist.png
+    - assets/bodyTemp.png
+    - assets/heartRate.png
+    - assets/skinConductance.png
+
+  fonts:
+    - family: Plus Jakarta Sans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
