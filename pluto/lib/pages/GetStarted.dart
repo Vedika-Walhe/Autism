@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class GetStartedScreen extends StatelessWidget {
+  const GetStartedScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF2F5F9),
+      backgroundColor: const Color(0xFFF2F5F9),
       body: Stack(
         alignment: Alignment.center, // Centers all elements in Stack
         children: [
@@ -23,14 +25,14 @@ class GetStartedScreen extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.start,  // Starts from top
             children: <Widget>[
-              SizedBox(height: 140), // Push content down
+              const SizedBox(height: 140), // Push content down
               // Row for Logo and Title
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,  // Centers horizontally
                 children: [
                   Column(
                     children:[
-                      Text(
+                      const Text(
                         'Welcome to Pluto',
                         style: TextStyle(
                           fontFamily: 'Plus Jakarta Sans',
@@ -39,21 +41,21 @@ class GetStartedScreen extends StatelessWidget {
                           color: Color(0xFF242E49),
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       Image.asset(
                         "assets/pluto_logo1.png",
                         width: 240,  // Adjust size as needed
                         height: 240,
                         fit: BoxFit.contain, // Keeps original aspect ratio
                       ),
-                      SizedBox(width: 2),
+                      const SizedBox(width: 2),
                     ]
                   )
 
                 ],
               ),
 
-              SizedBox(height: 80), // Space before the button
+              const SizedBox(height: 80), // Space before the button
 
               // Get Started Button
               ElevatedButton(
@@ -61,14 +63,14 @@ class GetStartedScreen extends StatelessWidget {
                   Navigator.pushNamed(context, '/welcome');// Button action
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF9EC8B9), // Button color
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                  textStyle: TextStyle(fontSize: 20),
+                  backgroundColor: const Color(0xFF9EC8B9), // Button color
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                  textStyle: const TextStyle(fontSize: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10), // Rounded corners
                   ),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(

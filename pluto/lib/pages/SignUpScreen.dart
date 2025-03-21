@@ -94,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ElevatedButton(
                     onPressed: () {
                       if (passwordController.text == confirmPasswordController.text) {
-                        // Handle sign-up logic
+                        Navigator.pushNamed(context, '/health_dashboard');
                       }
                     },
                     style: ElevatedButton.styleFrom(

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pluto/pages/profile_setup_page.dart';
+import 'package:pluto/pages/HealthMetrics.dart';
+import 'package:pluto/pages/parent_schedule.dart';
+import 'package:pluto/pages/health_dashboard.dart';
 
 class TherapyLogs extends StatefulWidget {
   @override
@@ -7,8 +11,34 @@ class TherapyLogs extends StatefulWidget {
 }
 
 class _TherapyLogsState extends State<TherapyLogs> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   String _sortBy = "Date";
+
+  void _onItemTapped(int index) {
+    if (index == _selectedIndex)
+      return; // Avoid reloading the same page
+    else if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HealthDashboard()),
+      );
+    } else if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HealthMetrics()),
+      );
+    } else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ParentSchedule()),
+      );
+    } else if (index == 4) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProfileSetupPage()),
+      );
+    }
+  }
 
   List<Map<String, dynamic>> therapyLogs = [
     {
@@ -48,7 +78,8 @@ class _TherapyLogsState extends State<TherapyLogs> {
     return Scaffold(
       backgroundColor: Colors.white, // Ensuring white background
       appBar: AppBar(
-        backgroundColor: Colors.white, // White background for title & back button
+        backgroundColor:
+            Colors.white, // White background for title & back button
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -142,24 +173,29 @@ class _TherapyLogsState extends State<TherapyLogs> {
                                 /// **Profile Image**
                                 CircleAvatar(
                                   backgroundImage: AssetImage(
-                                      log["profileImage"] ?? "assets/default.png"),
+                                      log["profileImage"] ??
+                                          "assets/default.png"),
                                 ),
                                 SizedBox(width: 12),
 
                                 /// **Main Log Content**
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       /// **Therapy Type**
                                       Container(
-                                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 6),
                                         decoration: BoxDecoration(
                                           color: log["color"] ?? Colors.grey,
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         child: Text(
-                                          log["therapyType"] ?? "Unknown Therapy",
+                                          log["therapyType"] ??
+                                              "Unknown Therapy",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 14,
@@ -209,17 +245,17 @@ class _TherapyLogsState extends State<TherapyLogs> {
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home_sharp), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.auto_graph_sharp), label: "Metrics"),
-          BottomNavigationBarItem(icon: Icon(Icons.library_books_sharp), label: "Notes"),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_sharp), label: "Calendar"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined), label: "Profile"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.auto_graph_sharp), label: "Metrics"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.library_books_sharp), label: "Notes"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_month_sharp), label: "Calendar"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_2_outlined), label: "Profile"),
         ],
       ),
     );

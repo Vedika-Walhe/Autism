@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pluto/pages/profile_setup_page.dart';
+import 'package:pluto/pages/therapy_logs.dart';
+import 'package:pluto/pages/parent_schedule.dart';
+import 'package:pluto/pages/health_dashboard.dart';
+import 'package:pluto/pages/HealthMetrics.dart';
 
 class BodyTemperatureScreen extends StatefulWidget {
   const BodyTemperatureScreen({super.key});
@@ -13,6 +18,35 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
   int _selectedTabIndex = 0; // For "Day, Month, Year, All" tabs
   final List<String> _tabs = ["Day", "Month", "Year", "All"];
 
+  void _onItemTapped(int index) {
+    if (index == _selectedIndex){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HealthDashboard()),
+      ); // Avoid reloading the same page
+    } else if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HealthMetrics()),
+      );
+    } else if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => TherapyLogs()),
+      );
+    } else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ParentSchedule()),
+      );
+    } else if (index == 4) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProfileSetupPage()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double containerWidth = MediaQuery.of(context).size.width - 32;
@@ -23,12 +57,16 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF242E49)),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: Text(
           "Body Temperature",
           style: GoogleFonts.poppins(
-              fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF242E49)),
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF242E49)),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -43,7 +81,9 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
             Text(
               "97°F",
               style: GoogleFonts.poppins(
-                  fontSize: 65, fontWeight: FontWeight.bold, color: Color(0xFF242E49)),
+                  fontSize: 65,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF242E49)),
             ),
             const SizedBox(height: 30),
             Container(
@@ -64,7 +104,9 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
                       decoration: BoxDecoration(
                         color: Color(0xFF242E49),
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey.shade300, width: 1), // Light gray border
+                        border: Border.all(
+                            color: Colors.grey.shade300,
+                            width: 1), // Light gray border
                       ),
                     ),
                   ),
@@ -87,7 +129,9 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
                               style: GoogleFonts.poppins(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: _selectedTabIndex == idx ? Colors.white : Color(0xFF242E49)),
+                                  color: _selectedTabIndex == idx
+                                      ? Colors.white
+                                      : Color(0xFF242E49)),
                             ),
                           ),
                         ),
@@ -119,7 +163,9 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
               child: Text(
                 "Anomalies",
                 style: GoogleFonts.poppins(
-                    fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF242E49)), // Increased size
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF242E49)), // Increased size
               ),
             ),
             const SizedBox(height: 15),
@@ -148,11 +194,7 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
         selectedItemColor: const Color(0xFF242E49),
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_sharp),
@@ -194,11 +236,14 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
           Text(
             label,
             style: GoogleFonts.poppins(
-                fontSize: 18, fontWeight: FontWeight.bold, color: color), // Increased size
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: color), // Increased size
           ),
           const Spacer(),
           Center(
-            child: Icon(Icons.show_chart, color: color, size: 40), // Bigger icon
+            child:
+                Icon(Icons.show_chart, color: color, size: 40), // Bigger icon
           ),
         ],
       ),

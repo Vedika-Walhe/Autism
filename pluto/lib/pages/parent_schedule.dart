@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:pluto/pages/profile_setup_page.dart';
+import 'package:pluto/pages/therapy_logs.dart';
+import 'package:pluto/pages/HealthMetrics.dart';
+import 'package:pluto/pages/health_dashboard.dart';
 
 class ParentSchedule extends StatefulWidget {
   @override
@@ -10,7 +14,33 @@ class _ParentScheduleState extends State<ParentSchedule> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
-  int _selectedIndex = 0; // Track selected tab index
+  int _selectedIndex = 3; // Track selected tab index
+
+  void _onItemTapped(int index) {
+    if (index == _selectedIndex)
+      return; // Avoid reloading the same page
+    else if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HealthDashboard()),
+      );
+    } else if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HealthMetrics()),
+      );
+    } else if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => TherapyLogs()),
+      );
+    } else if (index == 4) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProfileSetupPage()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +87,10 @@ class _ParentScheduleState extends State<ParentSchedule> {
             headerStyle: HeaderStyle(
               titleCentered: true,
               formatButtonVisible: false, // Removed the week button
-              leftChevronIcon: Icon(Icons.chevron_left, color: Color(0xFF242E49)),
-              rightChevronIcon: Icon(Icons.chevron_right, color: Color(0xFF242E49)),
+              leftChevronIcon:
+                  Icon(Icons.chevron_left, color: Color(0xFF242E49)),
+              rightChevronIcon:
+                  Icon(Icons.chevron_right, color: Color(0xFF242E49)),
             ),
             calendarStyle: CalendarStyle(
               selectedDecoration: BoxDecoration(
@@ -114,7 +146,8 @@ class _ParentScheduleState extends State<ParentSchedule> {
                   ],
                 ),
                 SizedBox(width: 15), // Spacing between text and box
-                Expanded( // Used Expanded to prevent overflow
+                Expanded(
+                  // Used Expanded to prevent overflow
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color(0xFF092635), // Dark greenish color
@@ -173,11 +206,7 @@ class _ParentScheduleState extends State<ParentSchedule> {
         selectedItemColor: Color(0xFF242E49),
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_sharp),
