@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 
 
 class ProfileSetupTherapist extends StatefulWidget {
+  const ProfileSetupTherapist({super.key});
+
   @override
   _ProfileSetupTherapistState createState() => _ProfileSetupTherapistState();
 }
 
 class _ProfileSetupTherapistState extends State<ProfileSetupTherapist> {
+  int _selectedIndex = 4;
+  
   DateTime? selectedDate;
 
   @override
@@ -46,14 +50,14 @@ class _ProfileSetupTherapistState extends State<ProfileSetupTherapist> {
                     child: CircleAvatar(
                       radius: 40,
                       backgroundColor: Colors.grey.shade300,
-                      child: Icon(Icons.person, size: 40, color: Colors.black54),
+                      child: const Icon(Icons.person, size: 40, color: Colors.black54),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -67,8 +71,7 @@ class _ProfileSetupTherapistState extends State<ProfileSetupTherapist> {
                     buildTextField(label: "Certificates/License"),
                     buildTextField(label: "Areas of Expertise", maxLines: 3),
                     buildTextField(label: "Experience"),
-                    buildTextField(label: "Availability"),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
@@ -76,6 +79,18 @@ class _ProfileSetupTherapistState extends State<ProfileSetupTherapist> {
                         backgroundColor: const Color(0xFF9EC8B9),
                       ),
                       child: const Text("Save",
+                          style: TextStyle(fontSize: 18, color: Colors.white)),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                        backgroundColor: const Color(0xFF9EC8B9),
+                      ),
+                      child: const Text("Logout",
                           style: TextStyle(fontSize: 18, color: Colors.white)),
                     ),
                   ],
@@ -95,7 +110,7 @@ class _ProfileSetupTherapistState extends State<ProfileSetupTherapist> {
         maxLines: maxLines,
         decoration: InputDecoration(
           labelText: label,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
       ),
     );
@@ -107,7 +122,7 @@ class _ProfileSetupTherapistState extends State<ProfileSetupTherapist> {
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
           labelText: label,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
         items: items.map((String value) {
           return DropdownMenuItem<String>(
@@ -127,9 +142,9 @@ class _ProfileSetupTherapistState extends State<ProfileSetupTherapist> {
         readOnly: true,
         decoration: InputDecoration(
           labelText: label,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           suffixIcon: IconButton(
-            icon: Icon(Icons.calendar_today),
+            icon: const Icon(Icons.calendar_today),
             onPressed: () async {
               DateTime? pickedDate = await showDatePicker(
                 context: context,

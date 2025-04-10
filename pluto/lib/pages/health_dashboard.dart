@@ -1,8 +1,14 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pluto/pages/profile_setup_page.dart';
 import 'package:pluto/pages/therapy_logs.dart';
 import 'package:pluto/pages/parent_schedule.dart';
 import 'package:pluto/pages/HealthMetrics.dart';
+import 'package:pluto/pages/therapy_logs_therapist.dart';
+import 'package:pluto/pages/therapist_home_page.dart';  
+import 'package:pluto/pages/therapist_schedule.dart';
+import 'package:pluto/pages/profile_setup_therapist.dart';  
 
 class HealthDashboard extends StatefulWidget {
   const HealthDashboard({super.key});
@@ -21,7 +27,7 @@ class _HealthDashboardState extends State<HealthDashboard> {
   final Color blue = const Color(0xFF60AFF9);
   final Color red = const Color(0xFFFC3A2E);
   final Color brightGreen = const Color(0xFF5CFF76);
-  final List<Widget> _pages = [
+  final List<Widget> _parentpages = [
     HealthDashboard(),
     HealthMetrics(),
     TherapyLogs(),
@@ -56,29 +62,72 @@ class _HealthDashboardState extends State<HealthDashboard> {
   }
 
   // Mock health metrics
-  final List<Map<String, dynamic>> healthMetrics = [
+  // List of health metrics with JSON filenames
+  List<Map<String, dynamic>> healthMetrics = [
     {
       'title': 'Body Temperature',
-      'value': '97',
+      'value': 'Loading...', // Placeholder
       'unit': '°F',
       'icon': 'assets/bodyTemp.png',
-      'color': Color(0xFF60AFF9),
+      'color': const Color(0xFF60AFF9),
+      'file': 'body_temperature.json',
     },
     {
       'title': 'Heart Rate',
-      'value': '120',
+      'value': 'Loading...',
       'unit': 'bpm',
       'icon': 'assets/heartRate.png',
-      'color': Color(0xFFFC3A2E),
+      'color': const Color(0xFFFC3A2E),
+      'file': 'heart_rate.json',
     },
     {
-      'title': 'Skin        Conductance',
-      'value': '1.2',
+      'title': 'Skin Conductance',
+      'value': 'Loading...',
       'unit': 'μS',
       'icon': 'assets/skinConductance.png',
-      'color': Color(0xFF5CFF76),
+      'color': const Color(0xFF5CFF76),
+      'file': 'skin_conductance.json',
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    loadHealthMetrics();
+  }
+
+  // Function to fetch values from JSON
+  Future<double> fetchMetricValue(String filename) async {
+    try {
+      String data = await rootBundle.loadString('assets/health_metrics/$filename');
+      final jsonResult = json.decode(data);
+      debugPrint("Loaded $filename: ${jsonResult.toString()}"); // Debugging
+      if (jsonResult.containsKey("value")) {
+        return jsonResult["value"].toDouble();
+      } else {
+        debugPrint("Key 'value' not found in $filename");
+        return 0.0;
+      }
+    } catch (e) {
+      debugPrint("Error loading $filename: $e");
+      return 0.0; // Fallback value
+    }
+  }
+
+  // Load JSON data and update the UI
+  void loadHealthMetrics() async {
+    List<Map<String, dynamic>> updatedMetrics = [];
+
+    for (var metric in healthMetrics) {
+      double value = await fetchMetricValue(metric['file']);
+      updatedMetrics.add({...metric, 'value': value.toString()});
+    }
+
+    setState(() {
+      healthMetrics = updatedMetrics;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +160,7 @@ class _HealthDashboardState extends State<HealthDashboard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'HI, XYZ!',
+                          'HI, Aakash!',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -129,7 +178,7 @@ class _HealthDashboardState extends State<HealthDashboard> {
                             const SizedBox(width: 6),
                             Flexible(
                               child: Text(
-                                'Next appointment: 25 Nov, 2024',
+                                'Next appointment: 1 April, 2025',
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: Colors.white.withOpacity(0.7),
@@ -220,7 +269,7 @@ class _HealthDashboardState extends State<HealthDashboard> {
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.bold, // Changed to bold
                                     ),
                                   ),
                                 ),
@@ -372,7 +421,7 @@ class _HealthDashboardState extends State<HealthDashboard> {
           ],
         ),
       ),
-
+      
       // Updated bottom navigation bar as requested
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.white,

@@ -71,7 +71,7 @@ class WelcomeScreen extends StatelessWidget {
 
               ElevatedButton(
                   onPressed: (){
-
+                      Navigator.pushNamed(context, '/login_therapist');
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF9EC8B9),

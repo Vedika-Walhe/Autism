@@ -1,42 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:pluto/database_helper.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignUpScreenTherapist extends StatefulWidget {
+  const SignUpScreenTherapist({super.key});
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _SignUpScreenTherapistState createState() => _SignUpScreenTherapistState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenTherapistState extends State<SignUpScreenTherapist> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
   final DatabaseHelper dbHelper = DatabaseHelper.instance;
+
   String? errorText;
+  bool isLoading = false;
 
   void registerUser() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
     String confirmPassword = confirmPasswordController.text.trim();
 
-    setState(() => errorText = null); // Reset error message
+    setState(() {
+      errorText = null;
+      isLoading = true;
+    });
+
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      setState(() {
+        errorText = "All fields are required!";
+        isLoading = false;
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      setState(() {
+        errorText = "Password must be at least 6 characters long!";
+        isLoading = false;
+      });
+      return;
+    }
 
     if (password != confirmPassword) {
-      setState(() => errorText = "Passwords do not match!");
+      setState(() {
+        errorText = "Passwords do not match!";
+        isLoading = false;
+      });
       return;
     }
 
     try {
-      await dbHelper.registerParent(email, password); 
+      await dbHelper.registerTherapist(email, password);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Registration Successful!")),
       );
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, '/login_therapist');
     } catch (e) {
       setState(() => errorText = "Email already exists! Try logging in.");
+    } finally {
+      setState(() => isLoading = false);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +94,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  const SizedBox(height: 15),
                   TextField(
                     controller: emailController,
                     decoration: const InputDecoration(
@@ -98,23 +124,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     obscureText: true,
                   ),
                   if (errorText != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      errorText!,
-                      style: const TextStyle(color: Colors.red, fontSize: 16),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        errorText!,
+                        style: const TextStyle(color: Colors.red, fontSize: 16),
+                      ),
                     ),
-                  ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: registerUser,
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: const Color(0xFF9EC8B9),
-                    ),
-                    child: const Text("Sign Up",
-                        style: TextStyle(fontSize: 18, color: Colors.white)),
-                  ),
+                  isLoading
+                      ? const CircularProgressIndicator()
+                      : ElevatedButton(
+                          onPressed: registerUser,
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 50),
+                            backgroundColor: const Color(0xFF9EC8B9),
+                          ),
+                          child: const Text("Sign Up",
+                              style: TextStyle(fontSize: 18, color: Colors.white)),
+                        ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +151,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextButton(
                         onPressed: () => Navigator.pushNamed(context, '/login'),
                         child: const Text("Sign In", style: TextStyle(color: Colors.red)),
-                       ),
+                      ),
                     ],
                   ),
                 ],

@@ -1,20 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:pluto/pages/therapy_logs_therapist.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:pluto/pages/profile_setup_page.dart';
+import 'package:pluto/pages/therapy_logs.dart';
+import 'package:pluto/pages/parent_schedule.dart';
+import 'package:pluto/pages/HealthMetrics.dart';
+import 'package:pluto/pages/health_dashboard.dart';
+import 'package:pluto/pages/profile_setup_therapist.dart';
+import 'package:pluto/pages/therapist_home_page.dart';
 
 class TherapistSchedule extends StatefulWidget {
+  const TherapistSchedule({super.key});
+
   @override
   _TherapistScheduleState createState() => _TherapistScheduleState();
 }
 
 class _TherapistScheduleState extends State<TherapistSchedule> {
+  int _selectedIndex = 2;
+  void _onItemTapped(int index) {
+    if (index == _selectedIndex)
+      return; 
+    else if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const TherapistHomePage()),
+      );
+    } else if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const TherapyLogsTherapist()),
+      );
+    } else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ProfileSetupTherapist()),
+      );
+    } 
+  }
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
-  int _selectedIndex = 0; // Track selected tab index
-
   void _addTherapySession() {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text("Add Therapy Session"),
         duration: Duration(seconds: 2),
       ),
@@ -24,7 +53,7 @@ class _TherapistScheduleState extends State<TherapistSchedule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF2F5F9),
+      backgroundColor: const Color(0xFFF2F5F9),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -32,9 +61,9 @@ class _TherapistScheduleState extends State<TherapistSchedule> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios_new_sharp, color: Color(0xFF242E49)),
+          icon: const Icon(Icons.arrow_back_ios_new_sharp, color: Color(0xFF242E49)),
         ),
-        title: Text(
+        title: const Text(
           'Calendar',
           style: TextStyle(
             color: Color(0xFF242E49),
@@ -63,13 +92,13 @@ class _TherapistScheduleState extends State<TherapistSchedule> {
                 _calendarFormat = format;
               });
             },
-            headerStyle: HeaderStyle(
+            headerStyle: const HeaderStyle(
               titleCentered: true,
               formatButtonVisible: false, // Removed the week button
               leftChevronIcon: Icon(Icons.chevron_left, color: Color(0xFF242E49)),
               rightChevronIcon: Icon(Icons.chevron_right, color: Color(0xFF242E49)),
             ),
-            calendarStyle: CalendarStyle(
+            calendarStyle: const CalendarStyle(
               selectedDecoration: BoxDecoration(
                 color: Color(0xFF242E49), // Yellow bubble for selected date
                 shape: BoxShape.circle,
@@ -80,9 +109,9 @@ class _TherapistScheduleState extends State<TherapistSchedule> {
               ),
             ),
           ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          const SizedBox(height: 20),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -94,17 +123,17 @@ class _TherapistScheduleState extends State<TherapistSchedule> {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "March 17, 2025", // Example Date
+                      "april 1, 2025", // Example Date
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -122,13 +151,13 @@ class _TherapistScheduleState extends State<TherapistSchedule> {
                     ),
                   ],
                 ),
-                SizedBox(width: 15), // Spacing between text and box
+                const SizedBox(width: 15), // Spacing between text and box
                 Expanded( // Used Expanded to prevent overflow
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFF092635), // Dark greenish color
+                      color: const Color(0xFF092635), // Dark greenish color
                       borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Colors.black12,
                           blurRadius: 4,
@@ -136,12 +165,15 @@ class _TherapistScheduleState extends State<TherapistSchedule> {
                         ),
                       ],
                     ),
-                    padding: EdgeInsets.all(15),
-                    child: Row(
+                    padding: const EdgeInsets.all(15),
+                    child: const Row(
                       children: [
                         CircleAvatar(
                           radius: 22,
-                          backgroundImage: AssetImage("assets/avatar.png"),
+                          child: CircleAvatar(
+                            radius: 40,
+                            child: Icon(Icons.person, size: 35, color: Colors.black54),
+                          ),
                         ),
                         SizedBox(width: 10),
                         Column(
@@ -177,30 +209,22 @@ class _TherapistScheduleState extends State<TherapistSchedule> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addTherapySession,
-        backgroundColor: Color(0xFF242E49),
-        child: Icon(Icons.add, color: Colors.white),
+        backgroundColor: const Color(0xFF242E49),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         elevation: 10,
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF242E49),
+        selectedItemColor: const Color(0xFF242E49),
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        items: [
+        onTap: _onItemTapped,
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_sharp),
             label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.auto_graph_sharp),
-            label: "Metrics",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books_sharp),

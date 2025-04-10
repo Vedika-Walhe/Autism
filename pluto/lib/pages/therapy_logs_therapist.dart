@@ -1,43 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pluto/pages/profile_setup_page.dart';
-import 'package:pluto/pages/HealthMetrics.dart';
-import 'package:pluto/pages/parent_schedule.dart';
-import 'package:pluto/pages/health_dashboard.dart';
+import 'package:pluto/pages/profile_setup_therapist.dart';
+import 'package:pluto/pages/therapist_schedule.dart';
+import 'package:pluto/pages/therapist_home_page.dart';
 
-class TherapyLogs extends StatefulWidget {
-  const TherapyLogs({super.key});
+class TherapyLogsTherapist extends StatefulWidget {
+  const TherapyLogsTherapist({super.key});
 
   @override
-  _TherapyLogsState createState() => _TherapyLogsState();
+  _TherapyLogsTherapistState createState() => _TherapyLogsTherapistState();
 }
 
-class _TherapyLogsState extends State<TherapyLogs> {
-  final int _selectedIndex = 2;
+class _TherapyLogsTherapistState extends State<TherapyLogsTherapist> {
+  final int _selectedIndex = 1;
   String _sortBy = "Date";
 
   void _onItemTapped(int index) {
-    if (index == _selectedIndex) {
+    if (index == _selectedIndex)
       return;
-    } else if (index == 0) {
+    else if (index == 0) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const HealthDashboard()),
+        MaterialPageRoute(builder: (context) =>const TherapistHomePage()),
       );
-    } else if (index == 1) {
+    } else if (index == 2) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const HealthMetrics()),
+        MaterialPageRoute(builder: (context) => const TherapistSchedule()),
       );
     } else if (index == 3) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ParentSchedule()),
-      );
-    } else if (index == 4) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ProfileSetupPage()),
+        MaterialPageRoute(builder: (context) => const ProfileSetupTherapist()),
       );
     }
   }
@@ -82,7 +76,8 @@ class _TherapyLogsState extends State<TherapyLogs> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back_ios_new_sharp, color: Color(0xFF242E49)),
+          icon: const Icon(Icons.arrow_back_ios_new_sharp,
+              color: Color(0xFF242E49)),
         ),
         title: const Text(
           'Therapy Logs',
@@ -163,21 +158,26 @@ class _TherapyLogsState extends State<TherapyLogs> {
                                 CircleAvatar(
                                   radius: 22,
                                   backgroundColor: Colors.grey[300],
-                                  child: const Icon(Icons.person, size: 24, color: Colors.black54),
+                                  child: const Icon(Icons.person,
+                                      size: 24, color: Colors.black54),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 6),
                                         decoration: BoxDecoration(
                                           color: log["color"] ?? Colors.grey,
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         child: Text(
-                                          log["therapyType"] ?? "Unknown Therapy",
+                                          log["therapyType"] ??
+                                              "Unknown Therapy",
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 14,
@@ -196,8 +196,9 @@ class _TherapyLogsState extends State<TherapyLogs> {
                                       const SizedBox(height: 6),
                                       Text(
                                         log["description"] ?? "No Description",
-                                        style: const TextStyle(color: Colors.black87),
-                                        ),
+                                        style: const TextStyle(
+                                            color: Colors.black87),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -226,8 +227,6 @@ class _TherapyLogsState extends State<TherapyLogs> {
         onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_sharp), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.auto_graph_sharp), label: "Metrics"),
           BottomNavigationBarItem(
               icon: Icon(Icons.library_books_sharp), label: "Notes"),
           BottomNavigationBarItem(

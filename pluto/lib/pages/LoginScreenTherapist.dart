@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:pluto/database_helper.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginScreenTherapist extends StatefulWidget {
+  const LoginScreenTherapist({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginScreenTherapistState createState() => _LoginScreenTherapistState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenTherapistState extends State<LoginScreenTherapist> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final DatabaseHelper dbHelper = DatabaseHelper.instance;
   String? errorText;
-  bool isLoading = false; // For loading indicator
+  bool isLoading = false;
 
   void loginUser() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
     setState(() {
-      errorText = null; // Reset error message
-      isLoading = true; // Show loading state
+      errorText = null;
+      isLoading = true;
     });
 
     if (email.isEmpty || password.isEmpty) {
@@ -32,17 +32,24 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    bool isAuthenticated = await dbHelper.loginParent(email, password);
+    try {
+      bool isAuthenticated = await dbHelper.loginTherapist(email, password);
 
-    setState(() => isLoading = false); // Remove loading state
+      setState(() => isLoading = false);
 
-    if (isAuthenticated) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Login Successful!")),
-      );
-      Navigator.pushReplacementNamed(context, '/health_dashboard');
-    } else {
-      setState(() => errorText = "Invalid email or password!");
+      if (isAuthenticated) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Login Successful!")),
+        );
+        Navigator.pushReplacementNamed(context, '/therapist_home_page');
+      } else {
+        setState(() => errorText = "Invalid email or password!");
+      }
+    } catch (e) {
+      setState(() {
+        errorText = "An error occurred. Please try again.";
+        isLoading = false;
+      });
     }
   }
 
@@ -66,7 +73,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.center,
                 child: const Text(
                   "Sign In",
-                  style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
               const SizedBox(height: 30),
@@ -97,12 +107,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
                           errorText!,
-                          style: const TextStyle(color: Colors.red, fontSize: 16),
+                          style: const TextStyle(
+                              color: Colors.red, fontSize: 16),
                         ),
                       ),
                     const SizedBox(height: 20),
                     isLoading
-                        ? const CircularProgressIndicator() // Show loading spinner
+                        ? const CircularProgressIndicator()
                         : ElevatedButton(
                             onPressed: loginUser,
                             style: ElevatedButton.styleFrom(
@@ -110,7 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               backgroundColor: const Color(0xFF9EC8B9),
                             ),
                             child: const Text("Sign In",
-                                style: TextStyle(fontSize: 18, color: Colors.white)),
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white)),
                           ),
                     const SizedBox(height: 20),
                     Row(
@@ -118,8 +130,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         const Text("Don't have an account?"),
                         TextButton(
-                          onPressed: () => Navigator.pushNamed(context, '/signup'),
-                          child: const Text("Sign Up", style: TextStyle(color: Colors.red)),
+                          onPressed: () => Navigator.pushNamed(
+                              context, '/signup_therapist'),
+                          child: const Text("Sign Up",
+                              style: TextStyle(color: Colors.red)),
                         ),
                       ],
                     ),

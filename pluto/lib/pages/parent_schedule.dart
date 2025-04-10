@@ -6,6 +6,8 @@ import 'package:pluto/pages/HealthMetrics.dart';
 import 'package:pluto/pages/health_dashboard.dart';
 
 class ParentSchedule extends StatefulWidget {
+  const ParentSchedule({super.key});
+
   @override
   _ParentScheduleState createState() => _ParentScheduleState();
 }
@@ -14,20 +16,20 @@ class _ParentScheduleState extends State<ParentSchedule> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
-  int _selectedIndex = 3; // Track selected tab index
+  final int _selectedIndex = 3; // Track selected tab index
 
   void _onItemTapped(int index) {
-    if (index == _selectedIndex)
+    if (index == _selectedIndex) {
       return; // Avoid reloading the same page
-    else if (index == 0) {
+    } else if (index == 0) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HealthDashboard()),
+        MaterialPageRoute(builder: (context) => const HealthDashboard()),
       );
     } else if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HealthMetrics()),
+        MaterialPageRoute(builder: (context) => const HealthMetrics()),
       );
     } else if (index == 2) {
       Navigator.push(
@@ -45,7 +47,7 @@ class _ParentScheduleState extends State<ParentSchedule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF2F5F9),
+      backgroundColor: const Color(0xFFF2F5F9),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -53,9 +55,9 @@ class _ParentScheduleState extends State<ParentSchedule> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios_new_sharp, color: Color(0xFF242E49)),
+          icon: const Icon(Icons.arrow_back_ios_new_sharp, color: Color(0xFF242E49)),
         ),
-        title: Text(
+        title: const Text(
           'Calendar',
           style: TextStyle(
             color: Color(0xFF242E49),
@@ -84,7 +86,7 @@ class _ParentScheduleState extends State<ParentSchedule> {
                 _calendarFormat = format;
               });
             },
-            headerStyle: HeaderStyle(
+            headerStyle: const HeaderStyle(
               titleCentered: true,
               formatButtonVisible: false, // Removed the week button
               leftChevronIcon:
@@ -92,7 +94,7 @@ class _ParentScheduleState extends State<ParentSchedule> {
               rightChevronIcon:
                   Icon(Icons.chevron_right, color: Color(0xFF242E49)),
             ),
-            calendarStyle: CalendarStyle(
+            calendarStyle: const CalendarStyle(
               selectedDecoration: BoxDecoration(
                 color: Color(0xFF242E49), // Yellow bubble for selected date
                 shape: BoxShape.circle,
@@ -103,9 +105,9 @@ class _ParentScheduleState extends State<ParentSchedule> {
               ),
             ),
           ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          const SizedBox(height: 20),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -117,17 +119,17 @@ class _ParentScheduleState extends State<ParentSchedule> {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "March 17, 2025", // Example Date
+                      "April 1, 2025", 
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -136,7 +138,7 @@ class _ParentScheduleState extends State<ParentSchedule> {
                     ),
                     SizedBox(height: 3),
                     Text(
-                      "10:00 AM - 11:00 AM", // Example Time
+                      "10:00 AM - 11:00 AM", 
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -145,14 +147,14 @@ class _ParentScheduleState extends State<ParentSchedule> {
                     ),
                   ],
                 ),
-                SizedBox(width: 15), // Spacing between text and box
+                const SizedBox(width: 15), // Spacing between text and box
                 Expanded(
                   // Used Expanded to prevent overflow
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFF092635), // Dark greenish color
+                      color: const Color(0xFF092635), // Dark greenish color
                       borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Colors.black12,
                           blurRadius: 4,
@@ -160,12 +162,15 @@ class _ParentScheduleState extends State<ParentSchedule> {
                         ),
                       ],
                     ),
-                    padding: EdgeInsets.all(15),
-                    child: Row(
+                    padding: const EdgeInsets.all(15),
+                    child: const Row(
                       children: [
                         CircleAvatar(
                           radius: 22,
-                          backgroundImage: AssetImage("assets/avatar.png"),
+                          child: CircleAvatar(
+                            radius: 40,
+                            child: Icon(Icons.person, size: 35, color: Colors.black54),
+                          ),
                         ),
                         SizedBox(width: 10),
                         Column(
@@ -181,7 +186,7 @@ class _ParentScheduleState extends State<ParentSchedule> {
                             ),
                             SizedBox(height: 3),
                             Text(
-                              "John Doe",
+                              "Reshma Gupta",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -203,11 +208,11 @@ class _ParentScheduleState extends State<ParentSchedule> {
         backgroundColor: Colors.white,
         elevation: 10,
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF242E49),
+        selectedItemColor: const Color(0xFF242E49),
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
         onTap: _onItemTapped,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_sharp),
             label: "Home",

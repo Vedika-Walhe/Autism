@@ -12,15 +12,15 @@ class HealthMetrics extends StatefulWidget {
 }
 
 class _HealthMetricsState extends State<HealthMetrics> {
-  int _selectedIndex = 1;
+  final int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
-    if (index == _selectedIndex)
+    if (index == _selectedIndex) {
       return; // Avoid reloading the same page
-    else if (index == 0) {
+    } else if (index == 0) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HealthDashboard()),
+        MaterialPageRoute(builder: (context) => const HealthDashboard()),
       );
     } else if (index == 2) {
       Navigator.push(
@@ -65,44 +65,46 @@ class _HealthMetricsState extends State<HealthMetrics> {
         ),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 40),
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/bodytemperature'),
-              child: HealthMetricCard(
-                asset: "assets/bodyTemp.png",
-                title: "Body Temperature",
-                value: "97",
-                unit: "°F",
-                bgColor: const Color(0xFF60AFF9),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.pushNamed(context, '/bodytemperature'),
+                child: const HealthMetricCard(
+                  asset: "assets/bodyTemp.png",
+                  title: "Body Temperature",
+                  value: "97",
+                  unit: "°F",
+                  bgColor: Color(0xFF60AFF9),
+                ),
               ),
-            ),
-            const SizedBox(height: 30),
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/heartrate'),
-              child: HealthMetricCard(
-                asset: "assets/heartRate.png",
-                title: "Heart Rate",
-                value: "120",
-                unit: "bpm",
-                bgColor: const Color(0xFFFC3A2E),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () => Navigator.pushNamed(context, '/heartrate'),
+                child: const HealthMetricCard(
+                  asset: "assets/heartRate.png",
+                  title: "Heart Rate",
+                  value: "120",
+                  unit: "bpm",
+                  bgColor: Color(0xFFFC3A2E),
+                ),
               ),
-            ),
-            const SizedBox(height: 30),
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/skinConductance'),
-              child: HealthMetricCard(
-                asset: "assets/skinConductance.png",
-                title: "Skin Conductance",
-                value: "15",
-                unit: "μS",
-                bgColor: const Color(0xFF5CFF76),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () => Navigator.pushNamed(context, '/skinConductance'),
+                child: const HealthMetricCard(
+                  asset: "assets/skinConductance.png",
+                  title: "Skin Conductance",
+                  value: "15",
+                  unit: "μS",
+                  bgColor: Color(0xFF5CFF76),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -159,14 +161,15 @@ class HealthMetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 310,
+      width: 350,
       height: 135,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset(asset, width: 60, height: 60, fit: BoxFit.contain),
           const SizedBox(width: 20),

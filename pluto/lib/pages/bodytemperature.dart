@@ -14,7 +14,7 @@ class BodyTemperatureScreen extends StatefulWidget {
 }
 
 class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
-  int _selectedIndex = 0; // For BottomNavigationBar
+  final int _selectedIndex = 0; // For BottomNavigationBar
   int _selectedTabIndex = 0; // For "Day, Month, Year, All" tabs
   final List<String> _tabs = ["Day", "Month", "Year", "All"];
 
@@ -22,12 +22,12 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
     if (index == _selectedIndex){
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HealthDashboard()),
+        MaterialPageRoute(builder: (context) => const HealthDashboard()),
       ); // Avoid reloading the same page
     } else if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HealthMetrics()),
+        MaterialPageRoute(builder: (context) => const HealthMetrics()),
       );
     } else if (index == 2) {
       Navigator.push(
@@ -66,7 +66,7 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
           style: GoogleFonts.poppins(
               fontSize: 30,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF242E49)),
+              color: const Color(0xFF242E49)),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -83,14 +83,14 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
               style: GoogleFonts.poppins(
                   fontSize: 65,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF242E49)),
+                  color: const Color(0xFF242E49)),
             ),
             const SizedBox(height: 30),
             Container(
               width: containerWidth,
               height: 50,
               decoration: BoxDecoration(
-                color: Color(0xFF242E49).withOpacity(0.1),
+                color: const Color(0xFF242E49).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Stack(
@@ -102,7 +102,7 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
                       width: tabWidth,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Color(0xFF242E49),
+                        color: const Color(0xFF242E49),
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
                             color: Colors.grey.shade300,
@@ -131,7 +131,7 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
                                   fontWeight: FontWeight.bold,
                                   color: _selectedTabIndex == idx
                                       ? Colors.white
-                                      : Color(0xFF242E49)),
+                                      : const Color(0xFF242E49)),
                             ),
                           ),
                         ),
@@ -165,7 +165,7 @@ class _BodyTemperatureScreenState extends State<BodyTemperatureScreen> {
                 style: GoogleFonts.poppins(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF242E49)), // Increased size
+                    color: const Color(0xFF242E49)), // Increased size
               ),
             ),
             const SizedBox(height: 15),
