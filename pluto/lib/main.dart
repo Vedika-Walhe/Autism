@@ -13,8 +13,14 @@ import 'package:pluto/pages/HealthMetrics.dart';
 import 'package:pluto/pages/health_dashboard.dart';
 import 'package:pluto/pages/bodytemperature.dart';
 import 'package:pluto/pages/heartrate.dart';
+import 'package:pluto/database_helper.dart';
+import 'package:pluto/pages/LoginScreenTherapist.dart';
+import 'package:pluto/pages/SignUpScreenTherapist.dart';
+import 'package:pluto/pages/therapy_logs_therapist.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper.instance.database;
   runApp(const MyApp());
 }
 
@@ -39,31 +45,14 @@ class MyApp extends StatelessWidget {
         '/parent_schedule': (context) => ParentSchedule(),
         '/therapist_home_page': (context) => TherapistHomePage(),
         '/therapist_schedule': (context) => TherapistSchedule(),
-        '/health_dashboard': (context) => HealthDashboard(),
-        '/GetStarted': (context) => GetStartedScreen(),
+        '/health_dashboard': (context) => const HealthDashboard(),
+        '/GetStarted': (context) => const GetStartedScreen(),
         '/bodytemperature': (context) => const BodyTemperatureScreen(),
         '/heartrate': (context) => const HeartRateScreen(),
+        '/login_therapist': (context) => const LoginScreenTherapist(),
+        '/signup_therapist': (context) => const SignUpScreenTherapist(),
+        '/therapy_logs_therapist': (context) => const TherapyLogsTherapist(),
       },
     );
   }
 }
-
-
-/*import 'package:flutter/material.dart';
-import 'package:pluto/pages/bodytemperature.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: BodyTemperatureScreen(),
-    );
-  }
-}*/
